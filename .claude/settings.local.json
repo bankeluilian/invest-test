@@ -5,7 +5,10 @@
       "Bash(sed:*)",
       "Bash(python -c ':*)",
       "WebFetch(domain:fonts.googleapis.com)",
-      "Bash(dir \"D:\\\\vibe conding\\\\test.cc\\\\image\")"
+      "Bash(dir \"D:\\\\vibe conding\\\\test.cc\\\\image\")",
+      "Bash(gh auth:*)",
+      "Bash(env)",
+      "Bash(curl:*)"
     ]
   }
 }

@@ -658,6 +658,7 @@
   </div>
 
 <script>
+// 大师数据
 var masters = [
   { name: "巴菲特", en: "Warren Buffett", img: "巴菲特.jpg", tags: ["价值投资", "长期持有", "护城河"], desc: "伯克希尔·哈撒韦掌门人，全球最成功的投资者。以「别人贪婪时恐惧，别人恐惧时贪婪」为信条，主张投资于具有持久竞争优势的优质企业，重仓持有少数几只股票，数十年如一日践行价值投资理念。", quote: "「人生就像滚雪球，重要的是找到足够湿的雪和足够长的山坡。」" },
   { name: "查克芒格", en: "Charlie Munger", img: "查克芒格.jpg", tags: ["多元思维模型", "逆向思维", "长期主义"], desc: "巴菲特的终身合作伙伴，伯克希尔·哈撒韦副主席。以跨学科的多元思维模型著称，强调从不同角度审视问题。提出「反向思维」方法论——要先知道怎么做会失败，然后避免它。", quote: "「知道自己在哪里会死，然后永远不去那里。」" },
@@ -676,7 +677,8 @@ var masters = [
   { name: "约翰·保尔森", en: "John Paulson", img: "约翰·保尔森.jpg", tags: ["事件驱动", "对冲基金", "危机捕捉"], desc: "保尔森对冲基金创始人，以在2008年金融危机中通过做空次贷产品狂赚150亿美元而封神。在次贷危机前夜，他是华尔街最孤独的警告者，顶着巨大压力坚持自己的判断直到暴利兑现。", quote: "「利润来自于在所有人都反对的时候，你是对的。」" }
 ];
 
-var questions = [
+// 题目数据（每题4个选项，ABCD对应4种风格）
+var questionsRaw = [
   { q: "深夜持仓最大的重仓股盘前无端暴跌28%，各大终端查不到任何基本面利空。此时你的真实反应是：", options: ["立刻重估DCF模型。若核心假设未被破坏，这不仅不是风险，反而是绝佳的左侧加仓机会。", "无条件挂单平仓。市场永远是对的，先截断亏损退出风暴眼，不与未知的极值风险作对。", "检查该标的对总头寸的波动率贡献，利用备用现金池进行动态再平衡以维持风险敞口。", "调出算法风控面板，检查是否触发尾部风险熔断机制，由系统自动执行对冲或平仓。"] },
   { q: "你以「估值极度低估」建仓某白马股，一年后股价腰斩，且被知名机构出具看空报告。你会：", options: ["无视噪音，继续深挖其护城河与财报附注，坚信均值回归规律，甚至越跌越买。", "承认自己看错了逻辑或周期，果断止损离场。在下降通道中补仓是自杀行为。", "保持原仓位不动摇，但通过买入反向资产或看跌期权来对冲进一步下行的Beta风险。", "输入最新的负面因子数据重新跑回测，如果Alpha衰减超过阈值，立刻由算法清仓。"] },
   { q: "以下哪种「致命亏损」情形，会让你的投资信仰受到最严重的心理打击？", options: ["买入并死扛了一家基本面恶化的公司，不仅错过了三年牛市，最终还面临退市。", "在加高杠杆单边做多时遭遇宏观黑天鹅，瞬间引发连锁爆仓，本金归零。", "精心构建的对冲组合，因极端危机导致底层资产相关性突然全部归一（Correlation=1）而双向巨亏。", "耗费两年研发、回测夏普率高达3.0的策略，一上实盘就遭遇严重的过拟合滑铁卢。"] },
@@ -704,6 +706,7 @@ var questions = [
   { q: "想象你满头银发、金盆洗手的那一天，你希望后辈如何评价你的投资传奇？", options: ["「他是一位睿智的商业哲学家，用一生的耐心证明了价值投资在任何时代都不会过时。」", "「他是华尔街最令人生畏的顶级狙击手，精准捕捉了历次金融危机并在废墟上建立帝国。」", "「他是真正的大音希声，没有惊心动魄的故事，只有极其恐怖的纪律和完美的资金曲线。」", "「他是用代码征服华尔街的科技先驱，他把投资从一门玄学彻底变成了一门精密的现代科学。」"] }
 ];
 
+// 性格类型定义
 var typeData = {
   A: { name: "价值投资型", en: "VALUE INVESTOR", icon: "🐢", desc: "你秉持价值投资理念，以「好公司+好价格」为核心准则。具备出色的逆向思维与极强耐心，在市场非理性恐慌时敢于果断出手。偏好长期持有优质标的，通过企业内在价值的持续增长获取复利回报。", traits: ["逆向投资", "安全边际", "长期持有", "价值发现"], advice: ["继续坚守能力圈，远离不懂的商业模式", "在市场恐慌时敢于加仓优质资产", "用现金流折现评估内在价值而非追逐热点", "承受短期波动，拥抱长期复利"], matchMaster: 0 },
   B: { name: "风控防御型", en: "RISK MANAGER", icon: "🐆", desc: "你将风险控制置于首位，本能地回避高风险敞口。具备敏锐的风险识别能力与严格的纪律性，在市场出现危险信号时能迅速做出反应。止损执行果断，不让单次亏损演变为灾难性损失。", traits: ["风险厌恶", "纪律严明", "盘感敏锐", "止损干脆"], advice: ["永远不要让本金暴露在无法承受的风险中", "设定严格的止损纪律并执行到底", "分散投资，不把所有鸡蛋放在一个篮子里", "在市场极度贪婪时学会止盈"], matchMaster: 9 },
@@ -711,13 +714,82 @@ var typeData = {
   D: { name: "量化科技型", en: "QUANT TECH", icon: "🐝", desc: "你信奉数据与算法的力量，以量化模型作为投资决策的核心工具。相信通过系统性的因子挖掘与模型迭代，可以从市场定价偏差中持续提取Alpha。追求高效执行与精密计算，让数学而非情绪主导投资。", traits: ["数据驱动", "模型量化", "执行果断", "因子挖掘"], advice: ["持续优化因子模型，保持Alpha衰减的警觉", "严控滑点和交易成本", "建立完善的回测-实盘验证体系", "设置熔断机制防止极端黑天鹅"], matchMaster: 6 }
 };
 
+// 每种性格类型的"标准答案模式"（用于计算匹配度）
+// 0=A, 1=B, 2=C, 3=D (对应选项位置)
+// 每种类型25个答案，需要ABCD混合才能得到对应类型
+var answerPatterns = {
+  A: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], // 全部A = 价值投资型
+  B: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], // 全部B = 风控防御型
+  C: [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2], // 全部C = 系统均衡型
+  D: [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3]  // 全部D = 量化科技型
+};
+
+// 打乱题目顺序
+var questions = [];
+function shuffleQuestions() {
+  var arr = questionsRaw.slice();
+  for (var i = arr.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+  }
+  return arr;
+}
+
+// 打乱每个题目的选项顺序，并记录原始映射
+var questionsWithShuffle = [];
+function shuffleOptions(qs) {
+  var result = [];
+  for (var i = 0; i < qs.length; i++) {
+    var opts = qs[i].options.slice();
+    var indices = [0, 1, 2, 3];
+    // Fisher-Yates shuffle
+    for (var j = indices.length - 1; j > 0; j--) {
+      var k = Math.floor(Math.random() * (j + 1));
+      var tmp = indices[j];
+      indices[j] = indices[k];
+      indices[k] = tmp;
+    }
+    var shuffledOpts = [];
+    var reverseMap = {};
+    for (var k = 0; k < 4; k++) {
+      shuffledOpts.push(opts[indices[k]]);
+      reverseMap[k] = indices[k]; // shuffled position k corresponds to original position indices[k]
+    }
+    result.push({
+      q: qs[i].q,
+      options: shuffledOpts,
+      shuffleMap: indices,
+      reverseMap: reverseMap
+    });
+  }
+  return result;
+}
+
+// 计算用户答案与各性格类型的匹配度
+function calculateMatch(userAnswers, pattern) {
+  var match = 0;
+  for (var i = 0; i < userAnswers.length; i++) {
+    if (userAnswers[i] === pattern[i]) {
+      match++;
+    }
+  }
+  return match;
+}
+
+// 变量
 var currentQuestion = 0;
-var scores = { A: 0, B: 0, C: 0, D: 0 };
+var userAnswers = []; // 存储用户选择的选项位置(0-3)
 var isAnimating = false;
 
 function startTest() {
   document.getElementById('startScreen').classList.add('hidden');
   document.getElementById('testScreen').classList.add('active');
+  questions = shuffleQuestions();
+  questionsWithShuffle = shuffleOptions(questions);
+  userAnswers = [];
+  currentQuestion = 0;
   showQuestion();
 }
 
@@ -775,7 +847,7 @@ function closeModal(e) {
 }
 
 function showQuestion() {
-  var q = questions[currentQuestion];
+  var q = questionsWithShuffle[currentQuestion];
   var card = document.querySelector('.question-card');
   var progress = Math.round(((currentQuestion + 1) / questions.length) * 100);
   document.getElementById('progressText').textContent = '第 ' + (currentQuestion + 1) + ' 题 / 共 ' + questions.length + ' 题';
@@ -783,14 +855,15 @@ function showQuestion() {
   document.getElementById('progressFill').style.width = progress + '%';
   card.style.opacity = '0';
   card.style.transform = 'translateY(10px)';
+
   setTimeout(function() {
     document.getElementById('questionNumber').textContent = '第 ' + (currentQuestion + 1) + ' 题';
     document.getElementById('questionText').textContent = q.q;
-    var letters = ['A', 'B', 'C', 'D'];
     var container = document.getElementById('optionsContainer');
     var html = '';
+    var letters = ['A', 'B', 'C', 'D'];
     for (var i = 0; i < q.options.length; i++) {
-      html += '<button class="option-btn" onclick="selectOption(\'' + letters[i] + '\')">' +
+      html += '<button class="option-btn" onclick="selectOption(' + i + ')">' +
         '<span class="option-letter">' + letters[i] + '</span>' +
         '<span class="option-text">' + q.options[i] + '</span></button>';
     }
@@ -801,13 +874,17 @@ function showQuestion() {
   }, 200);
 }
 
-function selectOption(letter) {
+function selectOption(optionIndex) {
   if (isAnimating) return;
   isAnimating = true;
   var btns = document.querySelectorAll('.option-btn');
   for (var i = 0; i < btns.length; i++) btns[i].classList.remove('selected');
-  event.currentTarget.classList.add('selected');
-  scores[letter]++;
+  btns[optionIndex].classList.add('selected');
+
+  // 记录用户选择的原始选项(通过shuffleMap转换)
+  var originalIndex = questionsWithShuffle[currentQuestion].shuffleMap[optionIndex];
+  userAnswers.push(originalIndex);
+
   setTimeout(function() {
     if (currentQuestion < questions.length - 1) {
       currentQuestion++;
@@ -823,17 +900,31 @@ function showResult() {
   for (i = 0; i < screens.length; i++) screens[i].classList.remove('active');
   document.getElementById('resultScreen').classList.add('active');
 
-  var maxScore = Math.max(scores.A, scores.B, scores.C, scores.D);
+  // 计算各性格类型的匹配度
+  var matchScores = {
+    A: calculateMatch(userAnswers, answerPatterns.A),
+    B: calculateMatch(userAnswers, answerPatterns.B),
+    C: calculateMatch(userAnswers, answerPatterns.C),
+    D: calculateMatch(userAnswers, answerPatterns.D)
+  };
+
+  // 找到最高匹配的类型
+  var maxMatch = 0;
   var dominantType = 'A';
-  if (scores.B === maxScore) dominantType = 'B';
-  else if (scores.C === maxScore) dominantType = 'C';
-  else if (scores.D === maxScore) dominantType = 'D';
+  var types = ['A', 'B', 'C', 'D'];
+  for (var t = 0; t < types.length; t++) {
+    if (matchScores[types[t]] > maxMatch) {
+      maxMatch = matchScores[types[t]];
+      dominantType = types[t];
+    }
+  }
+
   var data = typeData[dominantType];
 
   document.getElementById('resultIcon').textContent = data.icon;
   document.getElementById('resultType').textContent = data.name;
   document.getElementById('resultEn').textContent = data.en;
-  document.getElementById('resultScoreText').textContent = '得分 ' + maxScore + ' / 25';
+  document.getElementById('resultScoreText').textContent = '匹配度 ' + maxMatch + ' / 25';
   document.getElementById('resultDescText').textContent = data.desc;
 
   var matchMaster = masters[data.matchMaster];
@@ -855,6 +946,13 @@ function showResult() {
   }
   document.getElementById('traitsGrid').innerHTML = traitsHtml;
 
+  // 显示各类型得分(原始ABC频率统计)
+  var letterCount = { A: 0, B: 0, C: 0, D: 0 };
+  for (var j = 0; j < userAnswers.length; j++) {
+    var letters2 = ['A', 'B', 'C', 'D'];
+    letterCount[letters2[userAnswers[j]]]++;
+  }
+
   var total = questions.length;
   var scoreBarsHtml = '';
   var scoreInfo = [{key:'A',label:'价值',cls:'type-a'},{key:'B',label:'风控',cls:'type-b'},{key:'C',label:'均衡',cls:'type-c'},{key:'D',label:'量化',cls:'type-d'}];
@@ -863,7 +961,7 @@ function showResult() {
     scoreBarsHtml += '<div class="score-bar-row">' +
       '<span class="score-label">' + s.label + '</span>' +
       '<div class="score-bar-bg"><div class="score-bar-fill ' + s.cls + '" data-score="' + s.key + '"></div></div>' +
-      '<span class="score-num">' + scores[s.key] + '</span></div>';
+      '<span class="score-num">' + letterCount[s.key] + '</span></div>';
   }
   document.getElementById('scoreBars').innerHTML = scoreBarsHtml;
 
@@ -877,14 +975,14 @@ function showResult() {
     var bars = document.querySelectorAll('.score-bar-fill');
     for (i = 0; i < bars.length; i++) {
       var key = bars[i].getAttribute('data-score');
-      bars[i].style.width = ((scores[key] / total) * 100) + '%';
+      bars[i].style.width = ((letterCount[key] / total) * 100) + '%';
     }
   }, 400);
 }
 
 function restartTest() {
   currentQuestion = 0;
-  scores = { A: 0, B: 0, C: 0, D: 0 };
+  userAnswers = [];
   isAnimating = false;
   var screens = document.querySelectorAll('.screen');
   for (var j = 0; j < screens.length; j++) screens[j].classList.remove('active');
