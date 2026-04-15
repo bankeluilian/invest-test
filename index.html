@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>投资性格测试</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #faf8f5;
+      --card: #ffffff;
+      --wood-light: #c4a77d;
+      --wood-dark: #8b7355;
+      --wood-pale: #e8dfd3;
+      --text-primary: #1a1a1a;
+      --text-secondary: #666666;
+      --text-tertiary: #999999;
+      --shadow-sm: 0 2px 12px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 24px rgba(0,0,0,0.06);
+      --shadow-lg: 0 8px 40px rgba(0,0,0,0.08);
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 28px;
+    }
+    body {
+      font-family: 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    .container { max-width: 480px; margin: 0 auto; padding: 0 20px 60px; }
+
+    /* ============ START SCREEN ============ */
+    .start-screen {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0 0;
+    }
+    .start-bg-pattern {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 420px;
+      background: linear-gradient(180deg, #f0ebe3 0%, var(--bg) 100%);
+      z-index: -1;
+    }
+    .start-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .start-header {
+      text-align: center;
+      padding: 48px 0 40px;
+    }
+    .start-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px 6px 10px;
+      background: rgba(196,167,125,0.12);
+      border: 1px solid rgba(196,167,125,0.25);
+      border-radius: 100px;
+      font-size: 11px;
+      color: var(--wood-dark);
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      margin-bottom: 32px;
+      animation: fadeIn 0.8s ease 0.1s both;
+    }
+    .badge-dot {
+      width: 5px;
+      height: 5px;
+      background: var(--wood-light);
+      border-radius: 50%;
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.3); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.85); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .start-icon-wrap {
+      width: 96px;
+      height: 96px;
+      margin: 0 auto 28px;
+      background: linear-gradient(145deg, #2a2520 0%, #3d3630 50%, #4a423a 100%);
+      border-radius: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      box-shadow: 0 16px 48px rgba(42,37,32,0.25), 0 4px 12px rgba(0,0,0,0.08);
+      animation: scaleIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+      position: relative;
+    }
+    .start-icon-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 27px;
+      background: linear-gradient(145deg, rgba(196,167,125,0.4), transparent 50%);
+      z-index: -1;
+    }
+    .start-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 6px;
+      margin-bottom: 10px;
+      animation: slideUp 0.7s ease 0.35s both;
+    }
+    .start-subtitle {
+      font-size: 14px;
+      color: var(--text-secondary);
+      font-weight: 300;
+      letter-spacing: 3px;
+      animation: slideUp 0.7s ease 0.45s both;
+    }
+
+    .start-divider {
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--wood-light), transparent);
+      margin: 0 auto 36px;
+      animation: fadeIn 0.6s ease 0.5s both;
+    }
+
+    .start-desc {
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.9;
+      color: var(--text-secondary);
+      padding: 0 24px;
+      margin-bottom: 40px;
+      animation: slideUp 0.7s ease 0.55s both;
+    }
+
+    .start-stats {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 40px;
+      animation: slideUp 0.7s ease 0.65s both;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 0 28px;
+      position: relative;
+    }
+    .stat-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 28px;
+      background: var(--wood-pale);
+    }
+    .stat-num {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--wood-dark);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 10px;
+      color: var(--text-tertiary);
+      letter-spacing: 1px;
+    }
+
+    .start-btn {
+      width: calc(100% - 48px);
+      margin: 0 24px 24px;
+      padding: 17px 32px;
+      background: linear-gradient(135deg, #2a2520 0%, #3d3630 100%);
+      border: none;
+      border-radius: 16px;
+      color: #f5f0ea;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      font-family: inherit;
+      letter-spacing: 3px;
+      box-shadow: 0 8px 32px rgba(42,37,32,0.2), 0 2px 8px rgba(0,0,0,0.06);
+      animation: slideUp 0.7s ease 0.75s both;
+      position: relative;
+      overflow: hidden;
+    }
+    .start-btn::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+      transition: left 0.6s ease;
+    }
+    .start-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(42,37,32,0.28), 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .start-btn:hover::after {
+      left: 150%;
+    }
+
+    .start-note {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-tertiary);
+      padding: 0 24px;
+      animation: fadeIn 0.6s ease 0.85s both;
+    }
+
+    /* ============ TABS ============ */
+    .tabs { display: flex; gap: 8px; margin-bottom: 24px; background: var(--wood-pale); padding: 4px; border-radius: 14px; }
+    .tab { flex: 1; padding: 11px 16px; border: none; background: transparent; font-size: 14px; font-weight: 500; color: var(--text-secondary); cursor: pointer; border-radius: 10px; transition: all 0.25s ease; font-family: inherit; }
+    .tab.active { background: var(--card); color: var(--wood-dark); box-shadow: var(--shadow-sm); }
+
+    /* ============ SCREENS ============ */
+    .screen { display: none; }
+    .screen.active { display: block; animation: fadeUp 0.4s ease; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ============ TEST SCREEN ============ */
+    .progress-container { margin-bottom: 20px; }
+    .progress-text { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-tertiary); margin-bottom: 8px; }
+    .progress-bar { height: 3px; background: var(--wood-pale); border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--wood-light), var(--wood-dark)); border-radius: 2px; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+
+    .question-card { background: var(--card); border-radius: var(--radius-lg); padding: 22px 18px; margin-bottom: 14px; box-shadow: var(--shadow-md); transition: opacity 0.25s ease, transform 0.25s ease; }
+    .question-number { font-size: 10px; color: var(--wood-light); font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; }
+    .question-text { font-size: 15px; line-height: 1.75; color: var(--text-primary); }
+
+    .options { display: flex; flex-direction: column; gap: 10px; }
+    .option-btn { width: 100%; padding: 15px 16px; background: var(--card); border: 1px solid rgba(0,0,0,0.05); border-radius: var(--radius-sm); color: var(--text-primary); font-size: 13px; line-height: 1.6; text-align: left; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: flex-start; gap: 12px; box-shadow: var(--shadow-sm); }
+    .option-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: rgba(196,167,125,0.3); }
+    .option-btn.selected { border-color: var(--wood-light); background: linear-gradient(135deg, rgba(196,167,125,0.08), rgba(139,115,85,0.04)); }
+    .option-letter { flex-shrink: 0; width: 24px; height: 24px; border-radius: 7px; background: var(--wood-pale); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: var(--wood-dark); transition: all 0.2s ease; }
+    .option-btn.selected .option-letter { background: linear-gradient(135deg, var(--wood-light), var(--wood-dark)); color: #fff; }
+    .option-text { flex: 1; padding-top: 2px; }
+
+    /* ============ MASTERS ============ */
+    .masters-grid { display: flex; flex-direction: column; gap: 12px; }
+    .master-card { background: var(--card); border-radius: var(--radius-md); padding: 18px; box-shadow: var(--shadow-sm); transition: all 0.3s ease; cursor: pointer; border: 1px solid transparent; }
+    .master-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: var(--wood-pale); }
+    .master-header { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+    .master-avatar { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; background: linear-gradient(135deg, var(--wood-pale), #e0d5c7); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .master-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .master-info h3 { font-family: 'Noto Serif SC', serif; font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+    .master-en { font-size: 10px; color: var(--text-tertiary); }
+    .master-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
+    .tag { padding: 3px 8px; background: var(--wood-pale); border-radius: 4px; font-size: 10px; color: var(--wood-dark); font-weight: 500; }
+    .master-desc { font-size: 12px; line-height: 1.7; color: var(--text-secondary); }
+
+    /* ============ RESULT SCREEN ============ */
+    .result-top {
+      text-align: center;
+      padding: 24px 0 20px;
+    }
+    .result-icon-wrap {
+      width: 88px;
+      height: 88px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #f0ebe3, var(--card));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+      animation: resultBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    @keyframes resultBounce {
+      0% { transform: scale(0); opacity: 0; }
+      60% { transform: scale(1.1); }
+      80% { transform: scale(0.95); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .result-type {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--wood-dark);
+      margin-bottom: 4px;
+      animation: slideUp 0.6s ease 0.2s both;
+    }
+    .result-en {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+      animation: slideUp 0.6s ease 0.3s both;
+    }
+    .result-score-text {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      animation: slideUp 0.6s ease 0.35s both;
+    }
+
+    /* Match Master Card */
+    .match-card {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 16px;
+      text-align: center;
+      border: 1px solid rgba(196,167,125,0.2);
+      box-shadow: var(--shadow-md);
+      animation: slideUp 0.6s ease 0.2s both;
+    }
+    .match-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .match-label {
+      font-size: 10px;
+      color: var(--wood-dark);
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .match-label-icon {
+      width: 16px;
+      height: 16px;
+      opacity: 0.6;
+    }
+    .match-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 12px;
+      border: 2px solid var(--wood-pale);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      background: var(--wood-pale);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .match-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .match-name {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+    .match-en { font-size: 11px; color: var(--text-tertiary); margin-bottom: 12px; }
+    .match-tags { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+    .match-tag { padding: 4px 10px; background: var(--wood-pale); border-radius: 6px; font-size: 11px; color: var(--wood-dark); font-weight: 500; }
+
+    /* Result Sections */
+    .result-section {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      padding: 20px 18px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow-sm);
+      animation: slideUp 0.6s ease both;
+    }
+    .result-section:nth-child(3) { animation-delay: 0.3s; }
+    .result-section:nth-child(4) { animation-delay: 0.4s; }
+    .result-section:nth-child(5) { animation-delay: 0.5s; }
+    .result-section:nth-child(6) { animation-delay: 0.6s; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .section-icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      opacity: 0.7;
+    }
+    .section-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 14px;
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+    .section-desc {
+      font-size: 13px;
+      line-height: 1.85;
+      color: var(--text-secondary);
+    }
+
+    /* Traits */
+    .traits-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .trait-card {
+      background: var(--card);
+      border-radius: var(--radius-sm);
+      padding: 16px 8px 14px;
+      text-align: center;
+      border: 1px solid rgba(0,0,0,0.04);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .trait-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
+    .trait-icon-wrap {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+    .trait-icon-wrap.type-a { background: rgba(16,185,129,0.1); color: #10b981; }
+    .trait-icon-wrap.type-b { background: rgba(59,130,246,0.1); color: #3b82f6; }
+    .trait-icon-wrap.type-c { background: rgba(139,92,246,0.1); color: #8b5cf6; }
+    .trait-icon-wrap.type-d { background: rgba(196,167,125,0.15); color: var(--wood-dark); }
+    .trait-name { font-size: 11px; color: var(--text-secondary); font-weight: 400; line-height: 1.4; }
+
+    /* Score Bars */
+    .score-bars { display: flex; flex-direction: column; gap: 12px; }
+    .score-bar-row { display: flex; align-items: center; gap: 10px; }
+    .score-label { width: 40px; font-size: 11px; color: var(--text-secondary); }
+    .score-bar-bg { flex: 1; height: 6px; background: var(--wood-pale); border-radius: 3px; overflow: hidden; }
+    .score-bar-fill { height: 100%; border-radius: 3px; width: 0; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); }
+    .score-bar-fill.type-a { background: linear-gradient(90deg, #10b981, #34d399); }
+    .score-bar-fill.type-b { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+    .score-bar-fill.type-c { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+    .score-bar-fill.type-d { background: linear-gradient(90deg, var(--wood-light), var(--wood-dark)); }
+    .score-num { width: 22px; font-size: 12px; font-weight: 600; color: var(--text-primary); text-align: right; }
+
+    /* Advice */
+    .advice-list { display: flex; flex-direction: column; gap: 12px; }
+    .advice-item { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; line-height: 1.7; color: var(--text-secondary); }
+    .advice-num { flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%; background: var(--wood-pale); display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 600; color: var(--wood-dark); margin-top: 2px; }
+    .advice-text { flex: 1; }
+
+    .restart-btn {
+      width: 100%; padding: 15px; background: transparent; border: 1.5px solid rgba(196,167,125,0.4);
+      border-radius: 14px; color: var(--wood-dark); font-size: 14px; font-weight: 500;
+      cursor: pointer; transition: all 0.25s ease; font-family: inherit; letter-spacing: 1px;
+      animation: slideUp 0.6s ease 0.7s both;
+    }
+    .restart-btn:hover { background: linear-gradient(135deg, var(--wood-light), var(--wood-dark)); color: #fff; border-color: transparent; }
+
+    .disclaimer { margin-top: 32px; padding: 16px; text-align: center; animation: fadeIn 0.6s ease 0.8s both; }
+    .disclaimer-title { font-size: 10px; color: var(--text-tertiary); margin-bottom: 5px; font-weight: 500; letter-spacing: 1px; }
+    .disclaimer-text { font-size: 10px; line-height: 1.7; color: var(--text-tertiary); opacity: 0.75; }
+
+    /* ============ MODAL ============ */
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.45); z-index: 100; animation: fadeIn 0.2s ease; }
+    .modal-overlay.show { display: flex; align-items: flex-end; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .modal-content { background: var(--card); border-radius: var(--radius-lg) var(--radius-lg) 0 0; padding: 28px 24px 40px; width: 100%; max-width: 480px; margin: 0 auto; animation: slideUp 0.3s ease; max-height: 85vh; overflow-y: auto; }
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    .modal-handle { width: 36px; height: 4px; background: var(--wood-pale); border-radius: 2px; margin: 0 auto 20px; }
+    .modal-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .modal-avatar { width: 54px; height: 54px; border-radius: 50%; overflow: hidden; background: linear-gradient(135deg, var(--wood-pale), #d8cfc3); display: flex; align-items: center; justify-content: center; font-size: 24px; }
+    .modal-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .modal-name { font-family: 'Noto Serif SC', serif; font-size: 18px; font-weight: 700; color: var(--text-primary); }
+    .modal-en { font-size: 11px; color: var(--text-tertiary); margin-top: 2px; }
+    .modal-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+    .modal-tag { padding: 4px 10px; background: var(--wood-pale); border-radius: 6px; font-size: 11px; color: var(--wood-dark); font-weight: 500; }
+    .modal-desc { font-size: 13px; line-height: 1.85; color: var(--text-secondary); }
+    .modal-quote { margin-top: 14px; padding: 12px; background: var(--bg); border-radius: var(--radius-sm); font-size: 12px; line-height: 1.75; color: var(--text-secondary); font-style: italic; border-left: 3px solid var(--wood-light); }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 380px) {
+      .start-title { font-size: 26px; letter-spacing: 4px; }
+      .stat-item { padding: 0 20px; }
+      .stat-num { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- START SCREEN -->
+    <div id="startScreen" class="start-screen">
+      <div class="start-bg-pattern"></div>
+      <div class="start-content">
+        <div class="start-header">
+          <div class="start-badge">
+            <span class="badge-dot"></span>
+            PROFESSIONAL INVESTMENT ASSESSMENT
+          </div>
+          <div class="start-icon-wrap">📊</div>
+          <h1 class="start-title">投资性格测试</h1>
+          <p class="start-subtitle">DISCOVER YOUR INVESTMENT DNA</p>
+        </div>
+
+        <div class="start-divider"></div>
+
+        <div class="start-desc">
+          通过25道专业心理测试题<br>
+          深度解析你的投资基因<br>
+          匹配最适合你的投资大师风格
+        </div>
+
+        <div class="start-stats">
+          <div class="stat-item">
+            <div class="stat-num">25</div>
+            <div class="stat-label">专业题目</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">4</div>
+            <div class="stat-label">性格维度</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">15</div>
+            <div class="stat-label">投资大师</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="start-btn" onclick="startTest()">开始测试</button>
+      <div class="start-note">本测试仅供娱乐参考，投资有风险</div>
+    </div>
+
+    <!-- TEST SCREEN -->
+    <div id="testScreen" class="screen">
+      <div class="tabs">
+        <button class="tab active" id="tabTest" onclick="switchTab('test')">开始测试</button>
+        <button class="tab" id="tabMasters" onclick="switchTab('masters')">投资大师</button>
+      </div>
+
+      <div class="progress-container">
+        <div class="progress-text">
+          <span id="progressText">第 1 题 / 共 25 题</span>
+          <span id="progressPercent">4%</span>
+        </div>
+        <div class="progress-bar">
+          <div id="progressFill" class="progress-fill" style="width: 4%"></div>
+        </div>
+      </div>
+
+      <div class="question-card">
+        <div id="questionNumber" class="question-number">第 1 题</div>
+        <div id="questionText" class="question-text"></div>
+      </div>
+
+      <div id="optionsContainer" class="options"></div>
+    </div>
+
+    <!-- MASTERS SCREEN -->
+    <div id="mastersScreen" class="screen">
+      <div class="masters-grid" id="mastersGrid"></div>
+    </div>
+
+    <!-- RESULT SCREEN -->
+    <div id="resultScreen" class="screen">
+      <div class="result-top">
+        <div class="result-icon-wrap" id="resultIcon"></div>
+        <div class="result-type" id="resultType"></div>
+        <div class="result-en" id="resultEn"></div>
+        <div class="result-score-text" id="resultScoreText"></div>
+      </div>
+
+      <div class="match-card">
+        <div class="match-card-top">
+          <svg class="match-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span class="match-label">你最契合的投资大师</span>
+          <svg class="match-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div class="match-avatar" id="matchAvatar"></div>
+        <div class="match-name" id="matchName"></div>
+        <div class="match-en" id="matchEn"></div>
+        <div class="match-tags" id="matchTags"></div>
+      </div>
+
+      <div class="result-section">
+        <div class="section-header">
+          <span class="section-icon">✦</span>
+          <span class="section-title">性格解读</span>
+        </div>
+        <p class="section-desc" id="resultDescText"></p>
+      </div>
+
+      <div class="result-section">
+        <div class="section-header">
+          <span class="section-icon">◈</span>
+          <span class="section-title">核心特质</span>
+        </div>
+        <div class="traits-grid" id="traitsGrid"></div>
+      </div>
+
+      <div class="result-section">
+        <div class="section-header">
+          <span class="section-icon">◇</span>
+          <span class="section-title">各维度得分</span>
+        </div>
+        <div class="score-bars" id="scoreBars"></div>
+      </div>
+
+      <div class="result-section">
+        <div class="section-header">
+          <span class="section-icon">✧</span>
+          <span class="section-title">投资建议</span>
+        </div>
+        <div class="advice-list" id="adviceList"></div>
+      </div>
+
+      <button class="restart-btn" onclick="restartTest()">重新测试</button>
+
+      <div class="disclaimer">
+        <div class="disclaimer-title">免责声明</div>
+        <div class="disclaimer-text">本测试仅供娱乐和参考，不构成任何投资建议。投资有风险，决策需谨慎，过往业绩不代表未来表现。请根据自身情况咨询专业投资顾问。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-handle"></div>
+      <div class="modal-header">
+        <div class="modal-avatar" id="modalAvatar"></div>
+        <div>
+          <div class="modal-name" id="modalName"></div>
+          <div class="modal-en" id="modalEn"></div>
+        </div>
+      </div>
+      <div class="modal-tags" id="modalTags"></div>
+      <div class="modal-desc" id="modalDesc"></div>
+      <div class="modal-quote" id="modalQuote"></div>
+    </div>
+  </div>
+
+<script>
+var masters = [
+  { name: "巴菲特", en: "Warren Buffett", img: "巴菲特.jpg", tags: ["价值投资", "长期持有", "护城河"], desc: "伯克希尔·哈撒韦掌门人，全球最成功的投资者。以「别人贪婪时恐惧，别人恐惧时贪婪」为信条，主张投资于具有持久竞争优势的优质企业，重仓持有少数几只股票，数十年如一日践行价值投资理念。", quote: "「人生就像滚雪球，重要的是找到足够湿的雪和足够长的山坡。」" },
+  { name: "查克芒格", en: "Charlie Munger", img: "查克芒格.jpg", tags: ["多元思维模型", "逆向思维", "长期主义"], desc: "巴菲特的终身合作伙伴，伯克希尔·哈撒韦副主席。以跨学科的多元思维模型著称，强调从不同角度审视问题。提出「反向思维」方法论——要先知道怎么做会失败，然后避免它。", quote: "「知道自己在哪里会死，然后永远不去那里。」" },
+  { name: "本杰明·格雷厄姆", en: "Benjamin Graham", img: "本杰明·格雷厄姆.jpg", tags: ["安全边际", "价值投资之父", "基本面分析"], desc: "价值投资的奠基人，《证券分析》和《聪明的投资者》作者。提出「内在价值」和「安全边际」两大核心理念，为价值投资奠定了理论基础。主张在市场价格低于内在价值时买入。", quote: "「投资的秘诀在于当你看到价值投资的机会时，勇敢下注，并且全力以赴。」" },
+  { name: "彼得·林奇", en: "Peter Lynch", img: "彼得·林奇.jpg", tags: ["成长投资", "散户思维", "十倍股"], desc: "富达麦哲伦基金传奇基金经理，13年间将基金规模从2000万增长至140亿。主张普通投资者应该投资于自己熟悉的领域，相信「十倍股」就在身边，强调生活中观察到的优秀公司往往值得投资。", quote: "「投资于你了解的行业和公司，这就是你相对于华尔街的优势。」" },
+  { name: "赛斯卡拉曼", en: "Seth Klarman", img: "赛斯卡拉曼.jpg", tags: ["深度价值", "安全边际", "避免亏损"], desc: "Baupost集团创始人，价值投资领域最成功的对冲基金经理之一。以极度重视安全边际著称，主张投资的首要目标是避免亏损而非追求高回报。2008年金融危机中成功躲过雷曼倒闭的灾难。", quote: "「投资的第一条规则是不亏钱；第二条规则是永远不要忘记第一条。」" },
+  { name: "菲利普·费雪", en: "Philip Fisher", img: "菲利普·费雪.jpg", tags: ["成长股", "定性分析", "长期投资"], desc: "成长股投资策略的先驱，与格雷厄姆并列为价值投资的两大流派。主张投资于具有卓越管理层和强大成长潜力的公司，重视与客户、供应商、管理层交谈等「闲聊」式调研方法。", quote: "「保守型投资者高枕无忧之道，就是投资于美国最优质企业的普通股，并长期持有。」" },
+  { name: "乔尔·格林布拉特", en: "Joel Greenblatt", img: "乔尔·格林布拉特.jpg", tags: ["魔法公式", "价值叠加成长", "高回报"], desc: "戈坦资本创始人，哥伦比亚大学商学院教授。发明了著名的「魔法公式」，通过量化ROIC和EBIT收益率筛选被低估的优质公司。强调价值与质量的结合，用系统化方法实践价值投资。", quote: "「在悲观的时候买入，在乐观的时候卖出。」" },
+  { name: "乔治·索罗斯", en: "George Soros", img: "乔治·索罗斯.jpg", tags: ["宏观对冲", "反射理论", "量子基金"], desc: "量子基金创始人，史上最成功的对冲基金经理之一。以「反射理论」解释金融市场的非理性行为，擅长在全球宏观层面捕捉货币、利率危机中的暴利机会。1992年做空英镑单日赚取10亿美元。", quote: "「如果你相信自己是正确的，就要敢于坚持自己的立场，即使要面对整个世界的反对。」" },
+  { name: "斯坦利·德鲁肯米勒", en: "Stanley Druckenmiller", img: "斯坦利·德鲁肯米勒.jpg", tags: ["宏观交易", "索罗斯搭档", "灵活性"], desc: "索罗斯的前首席策略师，曾管理量子基金连续30年正收益。以宏观经济趋势交易见长，擅长在大趋势中重仓出击。2008年金融危机中不仅全身而退，还实现了正收益。", quote: "「重要的不是你对市场的判断对错，而是当你对的时候，你赚了多少；当你错的时候，你亏了多少。」" },
+  { name: "杰西·利弗莫尔", en: "Jesse Livermore", img: "杰西·利弗莫尔.jpg", tags: ["趋势交易", "技术分析", "大作手"], desc: "20世纪初最传奇的交易员，四起四落的人生诠释了投机的残酷与魅力。以「最小阻力位」和「突破关键点」为核心理念，纯技术分析派先驱，影响了后世无数交易员。", quote: "「投机者的敌人，是内心深处的人性弱点——希望、恐惧和贪婪。」" },
+  { name: "保罗·都铎·琼斯", en: "Paul Tudor Jones", img: "保罗·都铎·琼斯.jpg", tags: ["趋势跟踪", "风险管理", "棉花期货"], desc: "Tudor投资创始人，以精准预判1987年股灾并从中获利而闻名。强调严格的风险管理原则，主张任何时候都要预设止损点位。期货交易出身，在各类市场中都展现了卓越的趋势捕捉能力。", quote: "「不要想着盈利，要想着保护资本。盈利会自己照顾自己。」" },
+  { name: "迈克尔·伯里", en: "Michael Burry", img: "迈克尔·伯里.jpg", tags: ["价值投资", "专注研究", "反人性"], desc: "Scion Capital创始人，《大空头》原型。因在2008年金融危机前精准做空CDO而获得巨额利润。以极致的独立研究和深度基本面分析著称，不随波逐流，敢于在市场共识相反时坚定自己的判断。", quote: "「做你自己相信的研究，不要让别人的共识来定义你的投资。」" },
+  { name: "比尔·阿克曼", en: "Bill Ackman", img: "比尔·阿克曼.jpg", tags: ["激进维权", "高集中度", "催化剂驱动"], desc: "潘兴广场资本创始人，以激进的维权投资风格著称。主张高集中度持仓，深度介入被投公司运营，通过推动公司变革释放价值。擅长寻找具有明确「催化剂」的特殊情况投资机会。", quote: "「最好的投资机会来自于对公司的深度理解，以及对变革即将发生的坚信。」" },
+  { name: "卡尔·伊坎", en: "Carl Icahn", img: "卡尔·伊坎.jpg", tags: ["激进股东", "恶意收购", "企业重组"], desc: "美国最著名的激进投资者之一，以在企业并购中扮演「门口野蛮人」角色闻名。通过买入被低估公司的股份，施加压力推动公司进行重大变革——分拆、业务重组或管理层更换来释放股东价值。", quote: "「当你发现一家被低估的公司，要敢于挑战现状，让潜在的变革发生。」" },
+  { name: "约翰·保尔森", en: "John Paulson", img: "约翰·保尔森.jpg", tags: ["事件驱动", "对冲基金", "危机捕捉"], desc: "保尔森对冲基金创始人，以在2008年金融危机中通过做空次贷产品狂赚150亿美元而封神。在次贷危机前夜，他是华尔街最孤独的警告者，顶着巨大压力坚持自己的判断直到暴利兑现。", quote: "「利润来自于在所有人都反对的时候，你是对的。」" }
+];
+
+var questions = [
+  { q: "深夜持仓最大的重仓股盘前无端暴跌28%，各大终端查不到任何基本面利空。此时你的真实反应是：", options: ["立刻重估DCF模型。若核心假设未被破坏，这不仅不是风险，反而是绝佳的左侧加仓机会。", "无条件挂单平仓。市场永远是对的，先截断亏损退出风暴眼，不与未知的极值风险作对。", "检查该标的对总头寸的波动率贡献，利用备用现金池进行动态再平衡以维持风险敞口。", "调出算法风控面板，检查是否触发尾部风险熔断机制，由系统自动执行对冲或平仓。"] },
+  { q: "你以「估值极度低估」建仓某白马股，一年后股价腰斩，且被知名机构出具看空报告。你会：", options: ["无视噪音，继续深挖其护城河与财报附注，坚信均值回归规律，甚至越跌越买。", "承认自己看错了逻辑或周期，果断止损离场。在下降通道中补仓是自杀行为。", "保持原仓位不动摇，但通过买入反向资产或看跌期权来对冲进一步下行的Beta风险。", "输入最新的负面因子数据重新跑回测，如果Alpha衰减超过阈值，立刻由算法清仓。"] },
+  { q: "以下哪种「致命亏损」情形，会让你的投资信仰受到最严重的心理打击？", options: ["买入并死扛了一家基本面恶化的公司，不仅错过了三年牛市，最终还面临退市。", "在加高杠杆单边做多时遭遇宏观黑天鹅，瞬间引发连锁爆仓，本金归零。", "精心构建的对冲组合，因极端危机导致底层资产相关性突然全部归一（Correlation=1）而双向巨亏。", "耗费两年研发、回测夏普率高达3.0的策略，一上实盘就遭遇严重的过拟合滑铁卢。"] },
+  { q: "业内资深大佬私下向你透露一个「即将并购重组」的绝对内幕消息。你的操作是：", options: ["婉拒参与。内幕消息无法改变企业长期创造自由现金流的能力，不在我交易体系内。", "表面感谢，暗中观察该标的的盘口量价配合。如果资金确实在抢筹，顺势跟风吃一段利润。", "绝不单吊此股，将其纳入一个事件驱动型的宽基组合中，严格控制单只标的的暴露度。", "提取该类并购事件的历史数据，用量化模型验证其在不同宏观环境下的实际胜率后，再做决策。"] },
+  { q: "复盘一笔惨痛的亏损时，你发现自己漏看了一个关键的宏观流动性指标。你会：", options: ["不以为然。宏观是无法预测的，亏损的本质仍是买得不够便宜或者企业质地不够硬。", "感到懊恼，深刻反省自己对资金面趋势的迟钝，将该指标列为日后开仓的一票否决项。", "调整资产配置模型，增加对冲流动性紧缩风险的防御性资产（如美债或黄金）权重。", "这只是一次正常的Error，立即将该流动性因子编写成代码，更新进多因子评价体系中。"] },
+  { q: "关于「高风险高回报」这一华尔街公理，你最认同的底层逻辑是：", options: ["风险来源于你不知道自己在做什么。好价格买好公司本身就是在降低风险，不需要险中求胜。", "风险是用来承担的，关键在于捕捉盈亏比极度不对称的击球点，一击致命。", "承担系统性风险获得市场Beta，同时通过大类资产极度分散来消除非系统性风险。", "风险是可以通过协方差矩阵和波动率模型被精确度量、剥离甚至定价的参数。"] },
+  { q: "你的账户里有大笔现金，且市场已持续数月找不到符合你建仓标准的标的。此时你感到：", options: ["极度平静。现金是看涨期权，耐心等待那个「好球区」出现是投资者的顶级美德。", "有些焦躁。资金有时间成本，空仓意味着在浪费波段机会，我会尝试小仓位试错。", "无感。根据我的全天候策略，现金也是资产配置的一环，当前只是现金权重较高而已。", "无法容忍。资金闲置是对算力的浪费，应立即部署短期的套利策略或现金管理模型。"] },
+  { q: "当所有人都在狂热高呼「这次不一样，新科技将彻底颠覆旧估值体系」时，你的第一反应是：", options: ["极度警惕。人性贪婪永不变，树长不到天上，万物皆有周期，均值回归会惩罚每一个狂徒。", "高度兴奋。泡沫是用来拥抱的，我会参与这场狂欢，但手指永远放在止损键上，比别人先跑。", "冷眼旁观。维持既定的股债平衡纪律，并逢高逐渐降低高估值资产的暴露敞口。", "启动情绪监控算法。抓取全网NLP数据，当量化热度指标见顶偏离历史均值3个标准差时反手做空。"] },
+  { q: "如果强制你终生只能使用唯一一个指标来做决策，你会留下：", options: ["ROIC（资本回报率）或自由现金流收益率：衡量企业真实造血与护城河的终极标尺。", "K线形态与量价结构：价格包容一切，趋势是唯一不会骗人的客观事实。", "夏普比率与最大回撤：永远在收益和风险的边界上寻找最优解。", "多因子Alpha排位：剥离市场噪音后，最纯粹的统计学优势体现。"] },
+  { q: "回首投资生涯，哪种「高光时刻」最能让你获得灵魂深处的成就感？", options: ["在2020年熔断时坚定逆势重仓某卓越公司，三年后享受十倍复利并受邀参加其股东大会。", "精准预判了2008年次贷危机，通过高杠杆做空CDO，在市场哀鸿遍野时狂揽百倍暴利。", "二十年如一日坚持定投和动态平衡，跨越两轮完整牛熊，最终资金曲线画出完美的平滑复利。", "团队发现了一个隐秘的统计套利微小破绽，写成算法后每天像印钞机一样自动吸取无风险利润。"] },
+  { q: "你发现最近一笔失败交易，和两年前犯过的错误在逻辑上如出一辙。这说明：", options: ["自己对该行业的商业模式依然没有吃透，超出了真正的「能力圈」，以后彻底放弃该板块。", "执行力出了大问题！主观情绪战胜了交易纪律，必须设定更严苛的手工斩仓铁律。", "人脑存在天然的认知偏差，必须依靠资产配置系统的强制定纪律来克服人性的弱点。", "这是绝佳的强化学习素材。立刻将这种错误模式转化为限制条件，编码进机器的交易限制中。"] },
+  { q: "面对某只过去三年涨了5倍、目前PE高达100倍的热门成长股，你的态度是：", options: ["直接拉黑。透支了未来十年的业绩，哪怕它是好公司，但绝不是一笔好投资，安全边际为负。", "密切跟踪。只要均线多头排列且动能未衰竭，就顺势参与，泡沫破裂右侧再做空。", "将其作为所在板块的Beta观察指标，但绝不重仓，用宽基指数覆盖该行业的红利即可。", "用机器学习模型分解其动量因子与成长因子，只要模型胜率 > 51% 就继续持有该多头。"] },
+  { q: "华尔街流传「预测宏观经济就像看后视镜开车」。对此你的看法是：", options: ["深表赞同。所以我不听央行行长讲话，只关心我投资的那家公司今年能赚多少真金白银。", "不完全对。宏观转折点确实难以预测，但趋势一旦形成就会延续，关键是跟随而非预测。", "普通人确实无法预测。所以唯一解药是通过跨地域、跨品类的多元化配置来抵御未知黑天鹅。", "宏观数据只是一组高维时间序列变量，通过足够深度的非线性模型，依然可以提取预测概率。"] },
+  { q: "你最向往的周末复盘交流对象是：", options: ["深耕实体产业的隐形冠军企业家：探寻商业本质、行业壁垒与上下游最真实的冷暖。", "经历过多次爆仓又爬起来的传奇游资/对冲基金经理：探讨人性的弱点、盘感与极值博弈。", "掌管万亿养老金的机构配置总监：交流美林时钟当前所处相位、流动性拐点与风险平价策略。", "顶级藤校的数学/物理学Ph.D：不谈股票，只聊最新的大模型架构、非凸优化和高频信号处理。"] },
+  { q: "查理·芒格极度推崇「能力圈」理论。你在实战中是如何践行的？", options: ["绝对铁律。我连科技股都不碰，只买我能一眼看懂的消费品和公用事业，不懂不做。", "适度突破。市场热点在哪里，我的能力圈就必须扩展到哪里，固步自封会被趋势抛弃。", "系统级防守。把个人能力圈的局限性视为一种已知风险，通过买入全市场指数来对冲自己的无知。", "降维打击。我的能力圈不是某个具体行业，而是我的算法、算力和处理海量非结构化数据的能力。"] },
+  { q: "面对一个极度诱人但逻辑极其复杂的创新金融衍生品（如早期的CDO），你会：", options: ["嗤之以鼻。越复杂的东西越容易藏污纳垢，我看不到底层资产的清晰现金流，绝对不碰。", "研究其背后的资金博弈结构。如果有足够庞大且愚蠢的资金涌入，我不介意做它的对手盘。", "利用其与其他大类资产的低相关性，拿出不超过总仓位1%的资金进行极其谨慎的配置测试。", "拿到该产品的历史逐笔定价数据，建立定价偏微分方程，寻找是否有无风险套利空间。"] },
+  { q: "合规声明上总写着「历史业绩不代表未来表现」。你内心的真实台词是：", options: ["说得对。过去涨得好的往往是透支未来，真正决定未来的是企业持续建立的竞争壁垒。", "这只是免责废话。华尔街没有新鲜事，因为人性中同样的贪婪和恐惧会在未来不断重演。", "部分正确。单一资产确实会均值回归，但资产大类之间负相关的统计学规律在长期是高度稳定的。", "这是个伪命题。只要历史数据样本足够大且满足平稳性，马尔可夫链就能推演出未来的概率分布。"] },
+  { q: "为了提升长期的绝对收益率，你愿意把大部分精力花在研究：", options: ["翻阅过去十年的财报原文、寻找管理层的诚实度瑕疵、调研竞争对手对该企业的评价。", "研判美联储加息路径、地缘政治冲突对供应链的冲击、以及主力资金在衍生品上的多空持仓比。", "构建更优的风险平价模型，寻找与传统股债相关性极低的新型替代资产（如加密货币或大宗商品）。", "清洗海量的另类数据（如卫星图像、信用卡账单），挖掘衰减周期更慢的全新Alpha因子。"] },
+  { q: "你如何看待「高频交易/频繁调仓」？", options: ["这是券商和华尔街收割韭菜的阴谋。买入即持有，静止才是获取超额复利的最高境界。", "这取决于趋势的长度。如果处于震荡市，频繁的波段操作和高抛低吸是生存的唯一法则。", "毫无意义。战术上的勤奋掩盖不了战略的懒惰，定好年度配置比例后，最多每季度做一次再平衡。", "这是微观维度的降维打击。只要夏普率够高、滑点控制得当，高频交易是剥削市场情绪的利器。"] },
+  { q: "如果用一种动物图腾来代表你的交易灵魂，你会选择：", options: ["重剑无锋的【乌龟】：无视外界的喧嚣，依靠厚重的护甲防守，用极长的寿命（复利）熬死所有对手。", "嗅觉敏锐的【猎豹】：99%的时间在潜伏观察，一旦发现极佳的盈亏比猎物，便爆发出致命一击。", "稳如泰山的【大象】：庞大而均衡，每一步都踩在坚实的资产基础上，不会轻易被任何风暴掀翻。", "冷酷无情的【蜂群】：没有个体主观意识，完全依靠高度严密的算法纪律和群体智能进行无死角掠夺。"] },
+  { q: "如果你投资生涯遭遇了不可挽回的毁灭性打击，事后复盘最可能的原因是：", options: ["被管理层长达十年的精妙财务造假所蒙骗，或者一项颠覆性技术瞬间摧毁了该公司的护城河。", "在一次看似必胜的趋势博弈中，放任了贪婪，过度使用杠杆，结果被黑天鹅事件一波带走。", "在长达五年的极端熊市中，心理防线崩溃，彻底抛弃了资产配置纪律，倒在了黎明前。", "遇到了百年一遇的流动性枯竭（如量化灾难日），模型底层假设的协方差矩阵瞬间失效且无法平仓。"] },
+  { q: "在这个残酷的市场里持续赚到钱，最终拼的是：", options: ["认知深度。谁能比市场更早、更准地看清一家企业的真实内在价值，谁就能拿走超额利润。", "人性的克制。能够在恐慌极值扣动扳机，在贪婪巅峰果断离场，这种反人性的特质是天生的。", "纪律与格局。放弃一夜暴富的幻想，用最枯燥的再平衡系统，去赚取长期经济增长的Beta钱。", "算力与逻辑。谁掌握了更纯净的数据、更深层的算法和更低延迟的网络，谁就是收割机。"] },
+  { q: "你认为金融市场（股市/期市）的本质是一个什么场所？", options: ["企业融资与价值发现的称重机。伟大的企业在这里获得资本，反哺投资者，实现共赢。", "一场合法的零和财富转移游戏。财富从没有纪律的冲动者口袋，合法转移到冷静的掠食者口袋。", "全社会财富抵御通胀的避风港。通过长期持有权益资产，分享人类生产力进步的红利。", "一个充满非有效性定价误差的庞大数据库。只要用足够高的维度去降维解构，处处都是套利空间。"] },
+  { q: "如果设定一个终生投资目标，你的终极愿景是：", options: ["买下几家卓越伟大的公司，伴随它们成长，最终凭借时间复利，实现财富的跨阶层跃迁。", "在控制最大回撤不超过15%的前提下，通过敏锐的宏观对冲，每年稳定攫取绝对正收益。", "年化7%-10%即可，但追求极低的波动率，让财富在不知不觉中滚雪球，绝不影响睡眠质量。", "建立一台彻底脱离人类情绪的纯粹赚钱机器，用数学证明市场是可以被完全战胜的。"] },
+  { q: "想象你满头银发、金盆洗手的那一天，你希望后辈如何评价你的投资传奇？", options: ["「他是一位睿智的商业哲学家，用一生的耐心证明了价值投资在任何时代都不会过时。」", "「他是华尔街最令人生畏的顶级狙击手，精准捕捉了历次金融危机并在废墟上建立帝国。」", "「他是真正的大音希声，没有惊心动魄的故事，只有极其恐怖的纪律和完美的资金曲线。」", "「他是用代码征服华尔街的科技先驱，他把投资从一门玄学彻底变成了一门精密的现代科学。」"] }
+];
+
+var typeData = {
+  A: { name: "价值投资型", en: "VALUE INVESTOR", icon: "🐢", desc: "你秉持价值投资理念，以「好公司+好价格」为核心准则。具备出色的逆向思维与极强耐心，在市场非理性恐慌时敢于果断出手。偏好长期持有优质标的，通过企业内在价值的持续增长获取复利回报。", traits: ["逆向投资", "安全边际", "长期持有", "价值发现"], advice: ["继续坚守能力圈，远离不懂的商业模式", "在市场恐慌时敢于加仓优质资产", "用现金流折现评估内在价值而非追逐热点", "承受短期波动，拥抱长期复利"], matchMaster: 0 },
+  B: { name: "风控防御型", en: "RISK MANAGER", icon: "🐆", desc: "你将风险控制置于首位，本能地回避高风险敞口。具备敏锐的风险识别能力与严格的纪律性，在市场出现危险信号时能迅速做出反应。止损执行果断，不让单次亏损演变为灾难性损失。", traits: ["风险厌恶", "纪律严明", "盘感敏锐", "止损干脆"], advice: ["永远不要让本金暴露在无法承受的风险中", "设定严格的止损纪律并执行到底", "分散投资，不把所有鸡蛋放在一个篮子里", "在市场极度贪婪时学会止盈"], matchMaster: 9 },
+  C: { name: "系统均衡型", en: "SYSTEMATIC", icon: "🐘", desc: "你是理性配置主义者，信仰通过科学的资产配置实现稳健回报。不受市场情绪左右，坚持既定的投资纪律与再平衡策略，在各种市场环境下都保持冷静，力求穿越牛熊周期获取稳定收益。", traits: ["资产配置", "纪律性强", "情绪稳定", "风险分散"], advice: ["坚持股债平衡的资产配置策略", "定期再平衡，维持目标风险敞口", "用定投克服人性弱点", "降低交易频率，减少不必要的摩擦成本"], matchMaster: 10 },
+  D: { name: "量化科技型", en: "QUANT TECH", icon: "🐝", desc: "你信奉数据与算法的力量，以量化模型作为投资决策的核心工具。相信通过系统性的因子挖掘与模型迭代，可以从市场定价偏差中持续提取Alpha。追求高效执行与精密计算，让数学而非情绪主导投资。", traits: ["数据驱动", "模型量化", "执行果断", "因子挖掘"], advice: ["持续优化因子模型，保持Alpha衰减的警觉", "严控滑点和交易成本", "建立完善的回测-实盘验证体系", "设置熔断机制防止极端黑天鹅"], matchMaster: 6 }
+};
+
+var currentQuestion = 0;
+var scores = { A: 0, B: 0, C: 0, D: 0 };
+var isAnimating = false;
+
+function startTest() {
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('testScreen').classList.add('active');
+  showQuestion();
+}
+
+function switchTab(tab) {
+  var i, tabs = document.querySelectorAll('.tab'), screens = document.querySelectorAll('.screen');
+  for (i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+  for (i = 0; i < screens.length; i++) screens[i].classList.remove('active');
+  if (tab === 'test') {
+    document.getElementById('tabTest').classList.add('active');
+    document.getElementById('testScreen').classList.add('active');
+  } else {
+    document.getElementById('tabMasters').classList.add('active');
+    document.getElementById('mastersScreen').classList.add('active');
+    renderMasters();
+  }
+}
+
+function renderMasters() {
+  var grid = document.getElementById('mastersGrid');
+  var html = '';
+  for (var i = 0; i < masters.length; i++) {
+    var m = masters[i];
+    html += '<div class="master-card" onclick="showMasterModal(' + i + ')">' +
+      '<div class="master-header">' +
+      '<div class="master-avatar"><img src="image/' + m.img + '" alt="' + m.name + '" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'' + m.name.charAt(0) + '\';"></div>' +
+      '<div class="master-info"><h3>' + m.name + '</h3><div class="master-en">' + m.en + '</div></div>' +
+      '</div>' +
+      '<div class="master-tags">';
+    for (var j = 0; j < m.tags.length; j++) html += '<span class="tag">' + m.tags[j] + '</span>';
+    html += '</div><div class="master-desc">' + m.desc.substring(0, 45) + '...</div></div>';
+  }
+  grid.innerHTML = html;
+}
+
+function showMasterModal(idx) {
+  var m = masters[idx];
+  var avatarEl = document.getElementById('modalAvatar');
+  avatarEl.innerHTML = '<img src="image/' + m.img + '" alt="' + m.name + '" onerror="this.parentElement.innerHTML=\'' + m.name.charAt(0) + '\';">';
+  document.getElementById('modalName').textContent = m.name;
+  document.getElementById('modalEn').textContent = m.en;
+  var tagsHtml = '';
+  for (var i = 0; i < m.tags.length; i++) tagsHtml += '<span class="modal-tag">' + m.tags[i] + '</span>';
+  document.getElementById('modalTags').innerHTML = tagsHtml;
+  document.getElementById('modalDesc').textContent = m.desc;
+  document.getElementById('modalQuote').textContent = m.quote;
+  document.getElementById('modalOverlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modalOverlay')) {
+    document.getElementById('modalOverlay').classList.remove('show');
+    document.body.style.overflow = '';
+  }
+}
+
+function showQuestion() {
+  var q = questions[currentQuestion];
+  var card = document.querySelector('.question-card');
+  var progress = Math.round(((currentQuestion + 1) / questions.length) * 100);
+  document.getElementById('progressText').textContent = '第 ' + (currentQuestion + 1) + ' 题 / 共 ' + questions.length + ' 题';
+  document.getElementById('progressPercent').textContent = progress + '%';
+  document.getElementById('progressFill').style.width = progress + '%';
+  card.style.opacity = '0';
+  card.style.transform = 'translateY(10px)';
+  setTimeout(function() {
+    document.getElementById('questionNumber').textContent = '第 ' + (currentQuestion + 1) + ' 题';
+    document.getElementById('questionText').textContent = q.q;
+    var letters = ['A', 'B', 'C', 'D'];
+    var container = document.getElementById('optionsContainer');
+    var html = '';
+    for (var i = 0; i < q.options.length; i++) {
+      html += '<button class="option-btn" onclick="selectOption(\'' + letters[i] + '\')">' +
+        '<span class="option-letter">' + letters[i] + '</span>' +
+        '<span class="option-text">' + q.options[i] + '</span></button>';
+    }
+    container.innerHTML = html;
+    card.style.opacity = '1';
+    card.style.transform = 'translateY(0)';
+    isAnimating = false;
+  }, 200);
+}
+
+function selectOption(letter) {
+  if (isAnimating) return;
+  isAnimating = true;
+  var btns = document.querySelectorAll('.option-btn');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('selected');
+  event.currentTarget.classList.add('selected');
+  scores[letter]++;
+  setTimeout(function() {
+    if (currentQuestion < questions.length - 1) {
+      currentQuestion++;
+      showQuestion();
+    } else {
+      showResult();
+    }
+  }, 400);
+}
+
+function showResult() {
+  var i, screens = document.querySelectorAll('.screen');
+  for (i = 0; i < screens.length; i++) screens[i].classList.remove('active');
+  document.getElementById('resultScreen').classList.add('active');
+
+  var maxScore = Math.max(scores.A, scores.B, scores.C, scores.D);
+  var dominantType = 'A';
+  if (scores.B === maxScore) dominantType = 'B';
+  else if (scores.C === maxScore) dominantType = 'C';
+  else if (scores.D === maxScore) dominantType = 'D';
+  var data = typeData[dominantType];
+
+  document.getElementById('resultIcon').textContent = data.icon;
+  document.getElementById('resultType').textContent = data.name;
+  document.getElementById('resultEn').textContent = data.en;
+  document.getElementById('resultScoreText').textContent = '得分 ' + maxScore + ' / 25';
+  document.getElementById('resultDescText').textContent = data.desc;
+
+  var matchMaster = masters[data.matchMaster];
+  var matchAvatar = document.getElementById('matchAvatar');
+  matchAvatar.innerHTML = '<img src="image/' + matchMaster.img + '" alt="' + matchMaster.name + '" onerror="this.parentElement.innerHTML=\'<span style=font-size:32px;font-family:Noto Serif SC>' + matchMaster.name.charAt(0) + '</span>\';">';
+  document.getElementById('matchName').textContent = matchMaster.name;
+  document.getElementById('matchEn').textContent = matchMaster.en;
+  var matchTagsHtml = '';
+  for (i = 0; i < matchMaster.tags.length; i++) {
+    matchTagsHtml += '<span class="match-tag">' + matchMaster.tags[i] + '</span>';
+  }
+  document.getElementById('matchTags').innerHTML = matchTagsHtml;
+
+  var traitsHtml = '';
+  var traitTypes = ['type-a', 'type-b', 'type-c', 'type-d'];
+  var traitEmojis = ['◉', '◎', '◇', '○'];
+  for (i = 0; i < data.traits.length; i++) {
+    traitsHtml += '<div class="trait-card"><div class="trait-icon-wrap ' + traitTypes[i] + '">' + traitEmojis[i] + '</div><div class="trait-name">' + data.traits[i] + '</div></div>';
+  }
+  document.getElementById('traitsGrid').innerHTML = traitsHtml;
+
+  var total = questions.length;
+  var scoreBarsHtml = '';
+  var scoreInfo = [{key:'A',label:'价值',cls:'type-a'},{key:'B',label:'风控',cls:'type-b'},{key:'C',label:'均衡',cls:'type-c'},{key:'D',label:'量化',cls:'type-d'}];
+  for (i = 0; i < scoreInfo.length; i++) {
+    var s = scoreInfo[i];
+    scoreBarsHtml += '<div class="score-bar-row">' +
+      '<span class="score-label">' + s.label + '</span>' +
+      '<div class="score-bar-bg"><div class="score-bar-fill ' + s.cls + '" data-score="' + s.key + '"></div></div>' +
+      '<span class="score-num">' + scores[s.key] + '</span></div>';
+  }
+  document.getElementById('scoreBars').innerHTML = scoreBarsHtml;
+
+  var adviceHtml = '';
+  for (i = 0; i < data.advice.length; i++) {
+    adviceHtml += '<div class="advice-item"><span class="advice-num">' + (i + 1) + '</span><span class="advice-text">' + data.advice[i] + '</span></div>';
+  }
+  document.getElementById('adviceList').innerHTML = adviceHtml;
+
+  setTimeout(function() {
+    var bars = document.querySelectorAll('.score-bar-fill');
+    for (i = 0; i < bars.length; i++) {
+      var key = bars[i].getAttribute('data-score');
+      bars[i].style.width = ((scores[key] / total) * 100) + '%';
+    }
+  }, 400);
+}
+
+function restartTest() {
+  currentQuestion = 0;
+  scores = { A: 0, B: 0, C: 0, D: 0 };
+  isAnimating = false;
+  var screens = document.querySelectorAll('.screen');
+  for (var j = 0; j < screens.length; j++) screens[j].classList.remove('active');
+  document.getElementById('startScreen').classList.remove('hidden');
+}
+</script>
+</body>
+</html>
